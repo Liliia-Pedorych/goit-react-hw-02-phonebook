@@ -5,15 +5,18 @@ class ContactForm extends Component {
   state = {
     name: '',
     number: '',
+    id: '',
   };
 
   nameInputId = uuidv4();
   numberInputId = uuidv4();
 
   handleChange = e => {
-    const { name, value } = e.currentTarget;
+    // console.log(e.currentTarget);
+    const { name, value, id } = e.currentTarget;
     this.setState({
       [name]: value,
+      id,
     });
   };
 
