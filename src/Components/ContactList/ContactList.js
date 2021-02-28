@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ContactList = ({ contactList }) => {
+const ContactList = ({ contactList, onDeleteContact }) => {
   return (
     <ul>
       {contactList.map(contact => (
@@ -8,6 +8,13 @@ const ContactList = ({ contactList }) => {
           <p>
             {contact.name}: {contact.number}
           </p>
+          <button
+            onClick={() => {
+              onDeleteContact(contact.id);
+            }}
+          >
+            Delete
+          </button>
         </li>
       ))}
     </ul>
