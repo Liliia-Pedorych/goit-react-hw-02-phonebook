@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { v4 as uuidv4 } from 'uuid';
+// import styles from './ContactForm.module.css';
 
 class ContactForm extends Component {
   state = {
@@ -12,7 +13,6 @@ class ContactForm extends Component {
   numberInputId = uuidv4();
 
   handleChange = e => {
-    // console.log(e.currentTarget);
     const { name, value, id } = e.currentTarget;
     this.setState({
       [name]: value,
@@ -22,16 +22,16 @@ class ContactForm extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    // console.log(this.state);
     this.props.onSubmit(this.state);
     this.resetForm();
   };
 
   resetForm = () => {
-    this.setState({ name: '', number: '' });
+    this.setState({ name: '', number: '', id: '' });
   };
 
   render() {
+    const { name, number } = this.state;
     return (
       <form onSubmit={this.handleSubmit}>
         <label htmlFor={this.nameInputId}>
@@ -39,7 +39,7 @@ class ContactForm extends Component {
           <input
             type="text"
             name="name"
-            value={this.state.name}
+            value={name}
             onChange={this.handleChange}
             id={this.nameInputId}
           />
@@ -49,7 +49,7 @@ class ContactForm extends Component {
           <input
             type="text"
             name="number"
-            value={this.state.number}
+            value={number}
             onChange={this.handleChange}
             id={this.numberInputId}
           />

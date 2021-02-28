@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
+import Container from './Container';
 import ContactForm from './ContactForm';
 import ContactList from './ContactList';
 import Filter from './Filter';
-
-// import Statistics from './Statistics/Statistics';
 
 class App extends Component {
   state = {
@@ -16,10 +15,15 @@ class App extends Component {
     filter: '',
   };
 
-  formSubmitHandler = data => {
-    console.log(data);
-    this.setState(({ contacts }) => ({ contacts: [...contacts, data] }));
-    // console.log(this.state.contacts);
+  formSubmitHandler = newContact => {
+    const includedInContacts = this.state.contacts.find(
+      contact => contact.name === newContact.name,
+    );
+    if (includedInContacts !== undefined) {
+      alert(`${newContact.name} is already in contacts`);
+      return;
+    }
+    this.setState(({ contacts }) => ({ contacts: [...contacts, newContact] }));
   };
 
   changeFilter = e => {
@@ -35,8 +39,8 @@ class App extends Component {
   };
 
   deleteContact = contactId => {
-    this.setState(prevState => ({
-      contacts: prevState.contacts.filter(contact => contact.id !== contactId),
+    this.setState(({ contacts }) => ({
+      contacts: contacts.filter(contact => contact.id !== contactId),
     }));
   };
 
@@ -46,7 +50,7 @@ class App extends Component {
     const filtredContacts = this.getFiltredContacts();
 
     return (
-      <>
+      <Container>
         <h1>Phonebook</h1>
         <ContactForm onSubmit={this.formSubmitHandler} />
         <h2>Contacts</h2>
@@ -55,7 +59,7 @@ class App extends Component {
           contactList={filtredContacts}
           onDeleteContact={this.deleteContact}
         />
-      </>
+      </Container>
     );
   }
 }
